@@ -67,29 +67,34 @@ function handleImageError() {
     <Head title="Welcome" />
     <div class="h-svh flex flex-col">
         <div class="flex justify-between mx-24 py-2">
-            <div class="flex items-center align-middle">
+            <div class="flex items-center justify-center">
                 <ApplicationLogo
                     class="h-20 w-20 fill-current text-gray-500 me-1"
                 />
-                <p class="font-light logo-text">
+                <p class="font-light logo-text montserrat-light">
                     FAMILY THREADS<br />
-                    by <span class="font-bold">BYTEXITO</span>
+                    by <span class="montserrat-bold">BYTEXITO</span>
                 </p>
             </div>
-            <PrimaryButton class="self-center px-8 py-3">Sign in</PrimaryButton>
+            <Link
+                :href="route('login')"
+                class="flex items-center justify-center"
+            >
+                <PrimaryButton class="self-center montserrat-light px-8 py-3">Sign in</PrimaryButton>
+            </Link>
         </div>
         <div class="flex flex-col justify-center align-middle flex-1 pb-24">
             <div class="flex flex-col items-end mx-24 mb-10">
                 <FlipCounter :count="100000" />
-                <p>Connections</p>
+                <p class="montserrat-light mt-2">Connections</p>
             </div>
             <div class="flex mx-24 hero-content">
                 <div class="container-left relative">
                     <div class="triangle absolute left-80 top-0"></div>
-                    <div class="text-3xl font-bold mt-20">
+                    <div class="text-2xl montserrat-bold mt-20">
                         Reconnect | Rediscover | Preserve Your Family Legacy
                     </div>
-                    <h1 class="text-8xl font-extrabold leading-snug">
+                    <h1 class="text-7xl montserrat-bold leading-snug">
                         Join Family Threads<br />Today!
                     </h1>
                 </div>
@@ -102,7 +107,7 @@ function handleImageError() {
                             placeholder="johndoe@gmail.com"
                             type="email"
                             variant="outlined"
-                            class="mb-2"
+                            class="mb-2 montserrat-light"
                         ></v-text-field>
                         <v-text-field
                             v-model="password"
@@ -114,7 +119,7 @@ function handleImageError() {
                             counter
                             @click:append="show1 = !show1"
                             variant="outlined"
-                            class="mb-2"
+                            class="mb-2 montserrat-light"
                         ></v-text-field>
                         <v-text-field
                             v-model="Confirmpassword"
@@ -126,11 +131,16 @@ function handleImageError() {
                             counter
                             @click:append="show2 = !show2"
                             variant="outlined"
-                            class="mb-2"
+                            class="mb-2 montserrat-light"
                         ></v-text-field>
                         <div class="flex items-center justify-end">
-                            <a href="#">Already have an account?</a>
-                            <PrimaryButton class="px-8 py-3 rounded-lg ms-5"
+                            <Link
+                                :href="route('login')"
+                                class="rounded-md montserrat-light hover:text-gray-900"
+                            >
+                            Already have an account?
+                            </Link>
+                            <PrimaryButton class="px-8 py-3 rounded-lg ms-5 montserrat-light"
                                 >Sign up
                             </PrimaryButton>
                         </div>
@@ -188,35 +198,35 @@ function handleImageError() {
             <div class="div1 img-2">
                 <div class="flex flex-col justify-end h-full">
                     <p
-                        class="text-xl font-extralight mt-5 text-white backdrop-blur-sm w-32"
+                        class="text-xl montserrat-light mt-5 text-white backdrop-blur-sm w-36"
                     >
                         Connect your
                     </p>
-                    <p class="text-4xl font-bold text-white">Family Tree</p>
+                    <p class="text-4xl montserrat-bold text-white">Family Tree</p>
                 </div>
             </div>
             <div class="div2 img-1">
                 <div class="flex h-full">
                     <div class="flex flex-col justify-end">
-                        <p class="text-xl font-extralight mt-5">
+                        <p class="text-xl montserrat-light mt-5">
                             Live your memories in
                         </p>
-                        <p class="text-4xl font-bold">Memory Threads</p>
+                        <p class="text-4xl montserrat-bold">Memory Threads</p>
                     </div>
                 </div>
             </div>
             <div class="div3 img-3">
                 <div class="flex flex-col justify-end h-full">
-                    <p class="text-xl font-extralight mt-5 text-white">
+                    <p class="text-xl montserrat-light mt-5 text-white">
                         Excite with
                     </p>
-                    <p class="text-4xl font-bold text-white">Time Capsules</p>
+                    <p class="text-4xl montserrat-bold text-white">Time Capsules</p>
                 </div>
             </div>
             <div class="div4 img-4">
                 <div class="flex flex-col justify-end h-full">
-                    <p class="text-xl font-extralight mt-5">Pass on your</p>
-                    <p class="text-4xl font-bold">Keep Sakes</p>
+                    <p class="text-xl montserrat-light mt-5">Pass on your</p>
+                    <p class="text-4xl montserrat-bold">Keep Sakes</p>
                 </div>
             </div>
         </div>
@@ -224,8 +234,8 @@ function handleImageError() {
     <div class="team-section mx-24 flex gap-4">
         <div class="carousel-sec-col1 flex justify-end pe-5">
             <div class="">
-                <p class="text-5xl font-bold">OUR</p>
-                <p class="text-2xl font-bold ms-10">Team</p>
+                <p class="text-5xl montserrat-bold">OUR</p>
+                <p class="text-2xl montserrat-bold ms-10">Team</p>
             </div>
         </div>
         <div
@@ -235,13 +245,13 @@ function handleImageError() {
                 <template #default="{ item }">
                     <div class="flex gap-3 justify-center items-center">
                         <div class="desc p-32">
-                            <p class="text-xl text-left">
+                            <p class="text-xl text-left montserrat-light">
                                 {{ item.description }}
                             </p>
-                            <p class="text-4xl text-left mt-5 font-bold">
+                            <p class="text-4xl text-left mt-5 montserrat-bold">
                                 {{ item.name }}
                             </p>
-                            <p class="text-xl text-left">{{ item.title }}</p>
+                            <p class="text-xl text-left montserrat-light mt-2">{{ item.title }}</p>
                         </div>
                         <div>
                             <img
@@ -259,7 +269,7 @@ function handleImageError() {
             </Carousel>
         </div>
     </div>
-    <div class="footer bg-black h-56 flex flex-col justify-center items-center">
+    <div class="footer bg-black h-52 flex flex-col justify-center items-center">
         <div class="flex gap-10">
             <span class="mdi mdi-facebook text-3xl hover:cursor-pointer"></span>
             <span
@@ -268,15 +278,12 @@ function handleImageError() {
             <span class="mdi mdi-whatsapp text-3xl hover:cursor-pointer"></span>
             <span class="mdi mdi-linkedin text-3xl hover:cursor-pointer"></span>
         </div>
-        <p class="mt-3">Join and follow us now!</p>
-        <p class="mt-3">© 2024 Made with 💛 by ByteExito.</p>
+        <p class="mt-3 montserrat-light">Join and follow us now!</p>
+        <p class="mt-3 montserrat-light">© 2024 Made with 💛 by ByteExito.</p>
     </div>
 </template>
 
 <style scoped>
-.logo-text {
-    font-size: 15px;
-}
 .container-left {
     width: 65%;
     height: 500px;
@@ -364,7 +371,7 @@ function handleImageError() {
   box-sizing: border-box;
   color: #e3e3e3;
   cursor: pointer;
-  font-family: 'Roboto', arial, sans-serif;
+  font-family: 'montserrat-light', arial, sans-serif;
   font-size: 14px;
   height: 40px;
   letter-spacing: 0.25px;
@@ -407,7 +414,7 @@ function handleImageError() {
 .gsi-material-button .gsi-material-button-contents {
   -webkit-flex-grow: 1;
   flex-grow: 1;
-  font-family: 'Roboto', arial, sans-serif;
+  font-family: 'montserrat', arial, sans-serif;
   font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;

@@ -1,9 +1,7 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 
 defineProps({
@@ -25,12 +23,6 @@ const submit = () => {
     <GuestLayout>
         <Head title="Forgot Password" />
 
-        <div class="mb-4 text-sm text-gray-600">
-            Forgot your password? No problem. Just let us know your email
-            address and we will email you a password reset link that will allow
-            you to choose a new one.
-        </div>
-
         <div
             v-if="status"
             class="mb-4 text-sm font-medium text-green-600"
@@ -38,31 +30,35 @@ const submit = () => {
             {{ status }}
         </div>
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
+        <p class="text-5xl montserrat-bold mb-8">Reset your password</p>
+        <div class="bg-white container rounded-3xl p-8">
+            <div class="mb-4 text-sm text-gray-600">
+                <p class="montserrat-light">Lost your password?</p>
+                <p class="mt-2 montserrat-light">Please enter your email address and you will recieve a link to create a new password via email.</p>
+            </div>
+            <v-form @submit.prevent="submit" class="p-2">
+                <v-text-field
                     v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div class="mt-4 flex items-center justify-end">
-                <PrimaryButton
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
-                    Email Password Reset Link
-                </PrimaryButton>
-            </div>
-        </form>
+                    label="Email Address"
+                    :class="['montserrat-light', form.errors.email ? 'mb-2' : 'mb-5']"
+                    name="input-email"
+                    variant="outlined"
+                    hide-details="auto"
+                ></v-text-field>
+                <InputError class="mb-2" :message="form.errors.email" />
+                <div class="flex items-center justify-end">
+                    <PrimaryButton
+                        class="px-16 py-3 rounded-lg ms-5 montserrat-light"
+                        type="submit"
+                        >Send
+                    </PrimaryButton>
+                </div>
+            </v-form>
+        </div>
     </GuestLayout>
 </template>
+<style scoped>
+.container {
+    width: 37rem;
+}
+</style>
