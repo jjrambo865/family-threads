@@ -18,8 +18,13 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
+        'profile_picture',
+        'role',
+        'family_id',
     ];
 
     /**
@@ -43,5 +48,25 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function family()
+    {
+        return $this->belongsTo(Family::class);
+    }
+
+    public function memberships()
+    {
+        return $this->hasMany(FamilyMembership::class);
+    }
+
+    public function assignments()
+    {
+        return $this->hasMany(Assignment::class);
+    }
+
+    public function memoryThreads()
+    {
+        return $this->hasMany(MemoryThread::class, 'created_by_user_id');
     }
 }

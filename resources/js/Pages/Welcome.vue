@@ -2,9 +2,10 @@
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import FlipCounter from "@/Components/FlipCounter.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { Head, Link } from "@inertiajs/vue3";
+import { Head, Link, useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
 import Carousel from "@/Components/Carousel.vue";
+import InputError from "@/Components/InputError.vue";
 
 defineProps({
     canLogin: {
@@ -21,12 +22,29 @@ defineProps({
         type: String,
         required: true,
     },
+    connectionCount: {
+        type: Number,
+        required: true,
+        // default: 0,
+    }
 });
 
-const password = ref("");
-const Confirmpassword = ref("");
+const form = useForm({
+    name: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
+    family_code: "",
+});
+
+const submit = () => {
+    form.post(route("register"), {
+        onFinish: () => form.reset("password", "password_confirmation"),
+    });
+};
+
 const show1 = ref(false);
-const show2 = ref(true);
+const show2 = ref(false);
 
 const team = [
     {
@@ -80,12 +98,14 @@ function handleImageError() {
                 :href="route('login')"
                 class="flex items-center justify-center"
             >
-                <PrimaryButton class="self-center montserrat-light px-8 py-3">Sign in</PrimaryButton>
+                <PrimaryButton class="self-center montserrat-light px-8 py-3"
+                    >Sign in</PrimaryButton
+                >
             </Link>
         </div>
         <div class="flex flex-col justify-center align-middle flex-1 pb-24">
-            <div class="flex flex-col items-end mx-24 mb-10">
-                <FlipCounter :count="100000" />
+            <div class="flex flex-col items-end mx-24 mb-10 mt-10">
+                <FlipCounter :count="connectionCount" />
                 <p class="montserrat-light mt-2">Connections</p>
             </div>
             <div class="flex mx-24 hero-content">
@@ -102,98 +122,112 @@ function handleImageError() {
                     <div
                         class="bg-white p-8 h-full rounded-3xl w-full flex flex-col"
                     >
-                        <v-text-field
-                            label="Email address"
-                            placeholder="johndoe@gmail.com"
-                            type="email"
-                            variant="outlined"
-                            class="mb-2 montserrat-light"
-                        ></v-text-field>
-                        <v-text-field
-                            v-model="password"
-                            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                            :type="show1 ? 'text' : 'password'"
-                            hint="At least 8 characters"
-                            label="Password"
-                            name="input-10-1"
-                            counter
-                            @click:append="show1 = !show1"
-                            variant="outlined"
-                            class="mb-2 montserrat-light"
-                        ></v-text-field>
-                        <v-text-field
-                            v-model="Confirmpassword"
-                            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                            :type="show2 ? 'text' : 'password'"
-                            hint="At least 8 characters"
-                            label="Confirm Password"
-                            name="input-10-1"
-                            counter
-                            @click:append="show2 = !show2"
-                            variant="outlined"
-                            class="mb-2 montserrat-light"
-                        ></v-text-field>
-                        <div class="flex items-center justify-end">
-                            <Link
-                                :href="route('login')"
-                                class="rounded-md montserrat-light hover:text-gray-900"
-                            >
-                            Already have an account?
-                            </Link>
-                            <PrimaryButton class="px-8 py-3 rounded-lg ms-5 montserrat-light"
-                                >Sign up
-                            </PrimaryButton>
-                        </div>
-                        <p class="my-6 text-center font-bold">Or</p>
-                        <div class="flex justify-center">
-                            <button class="gsi-material-button">
-                            <div class="gsi-material-button-state"></div>
-                            <div class="gsi-material-button-content-wrapper">
-                                <div class="gsi-material-button-icon">
-                                    <svg
-                                        version="1.1"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 48 48"
-                                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                                        style="display: block"
-                                    >
-                                        <path
-                                            fill="#EA4335"
-                                            d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
-                                        ></path>
-                                        <path
-                                            fill="#4285F4"
-                                            d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
-                                        ></path>
-                                        <path
-                                            fill="#FBBC05"
-                                            d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
-                                        ></path>
-                                        <path
-                                            fill="#34A853"
-                                            d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
-                                        ></path>
-                                        <path
-                                            fill="none"
-                                            d="M0 0h48v48H0z"
-                                        ></path>
-                                    </svg>
-                                </div>
-                                <span class="gsi-material-button-contents"
-                                    >Sign up with Google</span
+                        <v-form @submit.prevent="submit" class="p-2">
+                            <v-text-field
+                                v-model="form.name"
+                                label="Name"
+                                id="name"
+                                :class="[
+                                    'montserrat-light',
+                                    form.errors.name ? 'mb-2' : 'mb-5',
+                                ]"
+                                name="input-name"
+                                variant="outlined"
+                                hide-details="auto"
+                            ></v-text-field>
+                            <InputError
+                                class="mb-2"
+                                :message="form.errors.name"
+                            />
+                            <v-text-field
+                                v-model="form.email"
+                                label="Email Address"
+                                :class="[
+                                    'montserrat-light',
+                                    form.errors.email ? 'mb-2' : 'mb-5',
+                                ]"
+                                name="input-email"
+                                variant="outlined"
+                                hide-details="auto"
+                            ></v-text-field>
+                            <InputError
+                                class="mb-2"
+                                :message="form.errors.email"
+                            />
+                            <v-text-field
+                                v-model="form.password"
+                                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                                :type="show1 ? 'text' : 'password'"
+                                label="Password"
+                                name="input-password"
+                                @click:append="show1 = !show1"
+                                variant="outlined"
+                                :class="[
+                                    'montserrat-light',
+                                    form.errors.password ? 'mb-2' : 'mb-5',
+                                ]"
+                                hide-details="auto"
+                            ></v-text-field>
+                            <InputError
+                                class="mb-2"
+                                :message="form.errors.password"
+                            />
+                            <v-text-field
+                                v-model="form.password_confirmation"
+                                :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+                                :type="show2 ? 'text' : 'password'"
+                                label="Password"
+                                name="input-password"
+                                @click:append="show2 = !show2"
+                                variant="outlined"
+                                :class="[
+                                    'montserrat-light',
+                                    form.errors.password_confirmation
+                                        ? 'mb-2'
+                                        : 'mb-5',
+                                ]"
+                                hide-details="auto"
+                            ></v-text-field>
+                            <InputError
+                                class="mb-2"
+                                :message="form.errors.password_confirmation"
+                            />
+                            <v-text-field
+                                v-model="form.family_code"
+                                label="Family Code (Optional)"
+                                :class="[
+                                    'montserrat-light',
+                                    form.errors.family_code ? 'mb-2' : 'mb-5',
+                                ]"
+                                name="input-family-code"
+                                variant="outlined"
+                                hide-details="auto"
+                                placeholder="Enter family code if invited"
+                            ></v-text-field>
+                            <InputError
+                                class="mb-2"
+                                :message="form.errors.family_code"
+                            />
+                            <div class="flex items-center justify-end">
+                                <Link
+                                    :href="route('login')"
+                                    class="rounded-md montserrat-light hover:text-gray-900"
                                 >
-                                <span style="display: none"
-                                    >Sign up with Google</span
-                                >
+                                    Already have an account?
+                                </Link>
+                                <PrimaryButton
+                                    class="px-8 py-3 rounded-lg ms-5 montserrat-light"
+                                    type="submit"
+                                    >Sign up
+                                </PrimaryButton>
                             </div>
-                        </button>
-                        </div>
+                        </v-form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="features-section">
+    <div class="features-section mt-15">
         <div class="mx-24 parent-grid h-custom mb-40">
             <div class="div1 img-2">
                 <div class="flex flex-col justify-end h-full">
@@ -202,7 +236,9 @@ function handleImageError() {
                     >
                         Connect your
                     </p>
-                    <p class="text-4xl montserrat-bold text-white">Family Tree</p>
+                    <p class="text-4xl montserrat-bold text-white">
+                        Family Tree
+                    </p>
                 </div>
             </div>
             <div class="div2 img-1">
@@ -220,7 +256,9 @@ function handleImageError() {
                     <p class="text-xl montserrat-light mt-5 text-white">
                         Excite with
                     </p>
-                    <p class="text-4xl montserrat-bold text-white">Time Capsules</p>
+                    <p class="text-4xl montserrat-bold text-white">
+                        Time Capsules
+                    </p>
                 </div>
             </div>
             <div class="div4 img-4">
@@ -251,7 +289,9 @@ function handleImageError() {
                             <p class="text-4xl text-left mt-5 montserrat-bold">
                                 {{ item.name }}
                             </p>
-                            <p class="text-xl text-left montserrat-light mt-2">{{ item.title }}</p>
+                            <p class="text-xl text-left montserrat-light mt-2">
+                                {{ item.title }}
+                            </p>
                         </div>
                         <div>
                             <img
@@ -286,12 +326,11 @@ function handleImageError() {
 <style scoped>
 .container-left {
     width: 65%;
-    height: 500px;
-    /* background-color: #d9ce5b; */
+    height: auto;
 }
 .container-right {
     width: 35%;
-    height: 500px;
+    height: auto;
 }
 .h-custom {
     height: 40rem;
@@ -358,112 +397,114 @@ function handleImageError() {
 }
 
 .gsi-material-button {
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  -webkit-appearance: none;
-  background-color: #131314;
-  background-image: none;
-  border: 1px solid #747775;
-  -webkit-border-radius: 20px;
-  border-radius: 20px;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  color: #e3e3e3;
-  cursor: pointer;
-  font-family: 'montserrat-light', arial, sans-serif;
-  font-size: 14px;
-  height: 40px;
-  letter-spacing: 0.25px;
-  outline: none;
-  overflow: hidden;
-  padding: 0 12px;
-  position: relative;
-  text-align: center;
-  -webkit-transition: background-color .218s, border-color .218s, box-shadow .218s;
-  transition: background-color .218s, border-color .218s, box-shadow .218s;
-  vertical-align: middle;
-  white-space: nowrap;
-  width: auto;
-  max-width: 400px;
-  min-width: min-content;
-  border-color: #8e918f;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -webkit-appearance: none;
+    background-color: #131314;
+    background-image: none;
+    border: 1px solid #747775;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #e3e3e3;
+    cursor: pointer;
+    font-family: "montserrat-light", arial, sans-serif;
+    font-size: 14px;
+    height: 40px;
+    letter-spacing: 0.25px;
+    outline: none;
+    overflow: hidden;
+    padding: 0 12px;
+    position: relative;
+    text-align: center;
+    -webkit-transition: background-color 0.218s, border-color 0.218s,
+        box-shadow 0.218s;
+    transition: background-color 0.218s, border-color 0.218s, box-shadow 0.218s;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: auto;
+    max-width: 400px;
+    min-width: min-content;
+    border-color: #8e918f;
 }
 
 .gsi-material-button .gsi-material-button-icon {
-  height: 20px;
-  margin-right: 12px;
-  min-width: 20px;
-  width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    min-width: 20px;
+    width: 20px;
 }
 
 .gsi-material-button .gsi-material-button-content-wrapper {
-  -webkit-align-items: center;
-  align-items: center;
-  display: flex;
-  -webkit-flex-direction: row;
-  flex-direction: row;
-  -webkit-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-  height: 100%;
-  justify-content: space-between;
-  position: relative;
-  width: 100%;
+    -webkit-align-items: center;
+    align-items: center;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    height: 100%;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
 }
 
 .gsi-material-button .gsi-material-button-contents {
-  -webkit-flex-grow: 1;
-  flex-grow: 1;
-  font-family: 'montserrat', arial, sans-serif;
-  font-weight: 500;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  vertical-align: top;
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+    font-family: "montserrat", arial, sans-serif;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
 }
 
 .gsi-material-button .gsi-material-button-state {
-  -webkit-transition: opacity .218s;
-  transition: opacity .218s;
-  bottom: 0;
-  left: 0;
-  opacity: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
+    -webkit-transition: opacity 0.218s;
+    transition: opacity 0.218s;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
 .gsi-material-button:disabled {
-  cursor: default;
-  background-color: #13131461;
-  border-color: #8e918f1f;
+    cursor: default;
+    background-color: #13131461;
+    border-color: #8e918f1f;
 }
 
 .gsi-material-button:disabled .gsi-material-button-state {
-  background-color: #e3e3e31f;
+    background-color: #e3e3e31f;
 }
 
 .gsi-material-button:disabled .gsi-material-button-contents {
-  opacity: 38%;
+    opacity: 38%;
 }
 
 .gsi-material-button:disabled .gsi-material-button-icon {
-  opacity: 38%;
+    opacity: 38%;
 }
 
-.gsi-material-button:not(:disabled):active .gsi-material-button-state, 
+.gsi-material-button:not(:disabled):active .gsi-material-button-state,
 .gsi-material-button:not(:disabled):focus .gsi-material-button-state {
-  background-color: white;
-  opacity: 12%;
+    background-color: white;
+    opacity: 12%;
 }
 
 .gsi-material-button:not(:disabled):hover {
-  -webkit-box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
-  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+    -webkit-box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+        0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+        0 1px 3px 1px rgba(60, 64, 67, 0.15);
 }
 
 .gsi-material-button:not(:disabled):hover .gsi-material-button-state {
-  background-color: white;
-  opacity: 8%;
+    background-color: white;
+    opacity: 8%;
 }
-
 </style>
