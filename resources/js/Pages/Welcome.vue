@@ -67,7 +67,7 @@ function handleImageError() {
     <Head title="Welcome" />
     <div class="h-svh flex flex-col">
         <div class="flex justify-between mx-24 py-2">
-            <div class="flex items-center align-middle">
+            <div class="flex items-center justify-center">
                 <ApplicationLogo
                     class="h-20 w-20 fill-current text-gray-500 me-1"
                 />
@@ -76,7 +76,12 @@ function handleImageError() {
                     by <span class="montserrat-bold">BYTEXITO</span>
                 </p>
             </div>
-            <PrimaryButton class="self-center montserrat-light px-8 py-3">Sign in</PrimaryButton>
+            <Link
+                :href="route('login')"
+                class="flex items-center justify-center"
+            >
+                <PrimaryButton class="self-center montserrat-light px-8 py-3">Sign in</PrimaryButton>
+            </Link>
         </div>
         <div class="flex flex-col justify-center align-middle flex-1 pb-24">
             <div class="flex flex-col items-end mx-24 mb-10">
@@ -129,7 +134,12 @@ function handleImageError() {
                             class="mb-2 montserrat-light"
                         ></v-text-field>
                         <div class="flex items-center justify-end">
-                            <a href="#" class="montserrat-light">Already have an account?</a>
+                            <Link
+                                :href="route('login')"
+                                class="rounded-md montserrat-light hover:text-gray-900"
+                            >
+                            Already have an account?
+                            </Link>
                             <PrimaryButton class="px-8 py-3 rounded-lg ms-5 montserrat-light"
                                 >Sign up
                             </PrimaryButton>
@@ -274,9 +284,6 @@ function handleImageError() {
 </template>
 
 <style scoped>
-.logo-text {
-    font-size: 15px;
-}
 .container-left {
     width: 65%;
     height: 500px;
