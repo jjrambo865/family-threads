@@ -21,12 +21,12 @@ const animatedCount = ref(1);
 const digits = computed(() => {
     return animatedCount.value
         .toString()
-        .padStart(props.count.toString().length, "0")
+        .padStart(8, "0") // Always pad to 8 digits
         .split("");
 });
 
 const animateCount = () => {
-    const incrementStep = Math.max(1, Math.floor(props.count / 100)); 
+    const incrementStep = Math.max(1, Math.floor(props.count / 100));
     const interval = setInterval(() => {
         if (animatedCount.value < props.count) {
             animatedCount.value = Math.min(animatedCount.value + incrementStep, props.count);
@@ -43,7 +43,7 @@ onMounted(() => {
 watch(
     () => props.count,
     () => {
-        animatedCount.value = 1;
+        animatedCount.value = 1; // Reset animation
         animateCount();
     }
 );
@@ -98,6 +98,7 @@ watch(
     font-size: 1rem;
     margin-left: 0.5rem;
 }
+
 .digit-count {
     position: relative;
     z-index: 1;

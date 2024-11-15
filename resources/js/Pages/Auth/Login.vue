@@ -49,7 +49,7 @@ const submit = () => {
                 ></v-text-field>
                 <InputError class="mb-2" :message="form.errors.email" />
                 <v-text-field
-                    v-model="password"
+                    v-model="form.password"
                     :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                     :type="show1 ? 'text' : 'password'"
                     label="Password"
