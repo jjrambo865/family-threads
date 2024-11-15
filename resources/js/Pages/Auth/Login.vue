@@ -77,7 +77,7 @@ const submit = () => {
             </v-form>
             <p class="my-3 text-center font-bold">Or</p>
             <div class="flex justify-center">
-                <button class="gsi-material-button ">
+                <button class="gsi-material-button">
                     <div class="gsi-material-button-state"></div>
                     <div class="gsi-material-button-content-wrapper">
                         <div class="gsi-material-button-icon">
