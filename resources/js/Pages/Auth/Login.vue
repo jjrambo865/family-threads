@@ -1,10 +1,7 @@
 <script setup>
-import Checkbox from "@/Components/Checkbox.vue";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
 import InputError from "@/Components/InputError.vue";
-import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import TextInput from "@/Components/TextInput.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
 
@@ -41,25 +38,26 @@ const submit = () => {
 
         <p class="text-5xl montserrat-bold mb-8">Login</p>
         <div class="bg-white container rounded-3xl p-8">
-            <v-form @submit.prevent class="p-2">
+            <v-form @submit.prevent="submit" class="p-2">
                 <v-text-field
                     v-model="form.email"
                     label="Email Address"
-                    class="mb-2 montserrat-light"
+                    :class="['montserrat-light', form.errors.email ? 'mb-2' : 'mb-5']"
                     name="input-email"
                     variant="outlined"
+                    hide-details="auto"
                 ></v-text-field>
+                <InputError class="mb-2" :message="form.errors.email" />
                 <v-text-field
                     v-model="password"
                     :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                     :type="show1 ? 'text' : 'password'"
-                    hint="At least 8 characters"
                     label="Password"
                     name="input-password"
-                    counter
                     @click:append="show1 = !show1"
                     variant="outlined"
-                    class="mb-2 montserrat-light"
+                    :class="['montserrat-light', form.errors.email ? 'mb-2' : 'mb-5']"
+                    hide-details="auto"
                 ></v-text-field>
                 <div class="flex items-center justify-end">
                     <Link

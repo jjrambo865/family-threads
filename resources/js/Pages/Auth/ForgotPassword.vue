@@ -1,9 +1,7 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 
 defineProps({
@@ -42,10 +40,12 @@ const submit = () => {
                 <v-text-field
                     v-model="form.email"
                     label="Email Address"
-                    class="mb-2 montserrat-light"
+                    :class="['montserrat-light', form.errors.email ? 'mb-2' : 'mb-5']"
                     name="input-email"
                     variant="outlined"
+                    hide-details="auto"
                 ></v-text-field>
+                <InputError class="mb-2" :message="form.errors.email" />
                 <div class="flex items-center justify-end">
                     <PrimaryButton
                         class="px-16 py-3 rounded-lg ms-5 montserrat-light"
